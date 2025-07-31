@@ -1,51 +1,112 @@
-@extends('adminlte::page')
+{{-- resources/views/clientes/index.blade.php --}}
 
-@section('content')
-<div class="container-fluid">
-    <h1>Lista de Clientes</h1>
+@php
+    // Configuración de la vista
+    $headerTitle = 'Gestión de Clientes';
+    $headerSubtitle = 'Administra y visualiza la información de tus clientes';
+    $headerIcon = 'fas fa-users';
+    
+    $tableTitle = 'Lista de Clientes';
+    $tableIcon = 'fas fa-list';
+    
+    $createRoute = route('clientes.create');
+    $createButtonText = 'Nuevo Cliente';
+    $createIcon = 'fas fa-plus';
+    
+    $emptyTitle = 'No hay clientes registrados';
+    $emptyMessage = 'Comienza agregando tu primer cliente haciendo clic en el botón "Nuevo Cliente".';
+    $emptyButtonText = 'Registrar Primer Cliente';
+    $emptyIcon = 'fas fa-users';
+    
+    $enableSearch = true;
+    $enableAnimations = true;
+    $enablePagination = true; // ← Habilitar paginación
+    $deleteButtonClass = '.btn-delete-client';
+    
+    // Estadísticas
+    $statsCards = [
+        [
+            'icon' => 'fas fa-chart-line',
+            'color' => 'primary',
+            'value' => $clientes->total(), // ← Cambiar de count() a total()
+            'label' => $clientes->total() != 1 ? 'clientes' : 'cliente'
+        ]
+    ];
+    
+    $records = $clientes;
+@endphp
 
-    <a href="{{ route('clientes.create') }}" class="btn btn-primary mb-3">Nuevo Cliente</a>
+@extends('layouts.list-template')
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+@section('table-headers')
+    <th width="8%">ID</th>
+    <th width="20%">Nombres</th>
+    <th width="20%">Apellidos</th>
+    <th width="18%">Teléfono</th>
+    <th width="20%">Correo</th>
+    <th width="14%">Acciones</th>
+@endsection
 
-    @if($clientes->count())
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Teléfono</th>
-                    <th>Correo</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($clientes as $cliente)
-                <tr>
-                    <td>{{ $cliente->id }}</td>
-                    <td>{{ $cliente->nombrescliente }}</td>
-                    <td>{{ $cliente->apellidoscliente }}</td>
-                    <td>{{ $cliente->telefonocliente ?? '-' }}</td>
-                    <td>{{ $cliente->correocliente ?? '-' }}</td>
-                    <td>
-                        <a href="{{ route('clientes.show', $cliente->id) }}" class="btn btn-info btn-sm">Ver</a>
-                        <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-warning btn-sm">Editar</a>
+@section('table-rows')
+    @foreach($clientes as $cliente)
+    <tr>
+        <td data-label="ID">
+            <span class="record-id">#{{ $cliente->id }}</span>
+        </td>
+        <td data-label="Nombres" class="record-name">
+            {{ $cliente->nombrescliente }}
+        </td>
+        <td data-label="Apellidos" class="record-name">
+            {{ $cliente->apellidoscliente }}
+        </td>
+        <td data-label="Teléfono" class="record-info">
+            @if($cliente->telefonocliente)
+                <i class="fas fa-phone text-success mr-1"></i>
+                {{ $cliente->telefonocliente }}
+            @else
+                <span class="text-muted">
+                    <i class="fas fa-minus"></i> Sin teléfono
+                </span>
+            @endif
+        </td>
+        <td data-label="Correo" class="record-info">
+            @if($cliente->correocliente)
+                <i class="fas fa-envelope text-primary mr-1"></i>
+                <span class="text-truncate-mobile">{{ $cliente->correocliente }}</span>
+            @else
+                <span class="text-muted">
+                    <i class="fas fa-minus"></i> Sin correo
+                </span>
+            @endif
+        </td>
+        <td data-label="Acciones" class="action-buttons">
+            <a href="{{ route('clientes.show', $cliente->id) }}" 
+                class="btn btn-sm btn-view"
+                title="Ver detalles">
+                <i class="fas fa-eye"></i>
+            </a>
+            <a href="{{ route('clientes.edit', $cliente->id) }}" 
+                class="btn btn-sm btn-edit"
+                title="Editar">
+                <i class="fas fa-edit"></i>
+            </a>
 
-                        <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" style="display:inline-block" onsubmit="return confirm('¿Seguro que quieres eliminar este cliente?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @else
-        <p>No hay clientes registrados.</p>
-    @endif
-</div>
+            {{-- Formulario oculto para eliminar --}}
+            <form id="delete-form-{{ $cliente->id }}" 
+                    action="{{ route('clientes.destroy', $cliente) }}" 
+                    method="POST" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
+
+            <button type="button" 
+                    class="btn btn-sm btn-delete btn-delete-client" 
+                    data-id="{{ $cliente->id }}"
+                    data-name="{{ $cliente->nombrescliente }} {{ $cliente->apellidoscliente }}"
+                    title="Eliminar">
+                <i class="fas fa-trash"></i>
+            </button>
+        </td>
+    </tr>
+    @endforeach
 @endsection

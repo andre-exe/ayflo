@@ -29,9 +29,9 @@ Route::middleware([
     })->name('dashboard');
 
     // Rutas para tus controladores
-    Route::resource('clientes', ClienteController::class);
+    Route::resource('clientes', App\Http\Controllers\ClienteController::class);
     Route::resource('responsables', ResponsableController::class);
-    Route::resource('empleados', EmpleadoController::class);
+    Route::resource('empleados', App\Http\Controllers\EmpleadoController::class);
     Route::resource('pagos', PagoController::class);
     Route::resource('bitacoras', BitacoraController::class);
     Route::resource('trabajos', TrabajoController::class);

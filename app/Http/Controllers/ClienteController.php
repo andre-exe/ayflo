@@ -12,7 +12,7 @@ class ClienteController extends Controller
      */
     public function index()
 {
-    $clientes = Cliente::all();
+    $clientes = Cliente::paginate(5);
     return view('clientes.index', compact('clientes'));
 }
 
@@ -22,7 +22,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('clientes.create');
     }
 
     /**
@@ -30,7 +30,17 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombrescliente' => 'required|string|max:255',
+            'apellidoscliente' => 'required|string|max:255',
+            'telefonocliente' => 'required|string|max:20',
+            'correocliente' => 'nullable|email',
+            
+        ]);
+
+        Cliente::create($request->all());
+
+         return redirect()->route('clientes.index');
     }
 
     /**
@@ -38,7 +48,7 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        //
+        return view('clientes.show', compact('cliente'));
     }
 
     /**
@@ -46,7 +56,7 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        //
+        return view('clientes.edit', compact('cliente'));
     }
 
     /**
@@ -54,7 +64,16 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
-        //
+        $request->validate([
+            'nombrescliente' => 'required|string|max:255',
+            'apellidoscliente' => 'required|string|max:255',
+            'telefonocliente' => 'required|string|max:20',
+            'correocliente' => 'nullable|email',
+        ]);
+
+        $cliente->update($request->all());
+
+        return redirect()->route('clientes.index');
     }
 
     /**
@@ -62,6 +81,7 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+         $cliente->delete();
+        return redirect()->route('clientes.index');
     }
 }

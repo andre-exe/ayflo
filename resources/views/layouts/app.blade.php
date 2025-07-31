@@ -1,3 +1,4 @@
+@extends('layouts.admin')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -21,7 +22,8 @@
         <x-banner />
 
         <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+            @include('navigation-menu')
+
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -41,5 +43,20 @@
         @stack('modals')
 
         @livewireScripts
+
+        
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- CSS globales -->
+<link rel="stylesheet" href="{{ asset('css/forms.css') }}">
+<link rel="stylesheet" href="{{ asset('css/tables.css') }}">
+
+<!-- JS globales -->
+<script src="{{ asset('js/alert.js') }}"></script>
+<script src="{{ asset('js/tables.js') }}"></script>
+
+    @yield('js')
     </body>
+    
+
 </html>

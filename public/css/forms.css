@@ -1,0 +1,75 @@
+/* public/css/forms.css - Estilos globales para formularios */
+
+/* Labels más pequeños y consistentes */
+.form-label,
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+/* Espaciado de los iconos en los labels */
+.form-label i,
+.form-group label i {
+    margin-right: 5px;
+}
+
+/* Estilos para botones de formulario */
+.form-btn {
+    padding: 8px 16px;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.form-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Espaciado entre botones */
+.form-buttons {
+    margin-top: 20px;
+}
+
+.form-buttons .btn + .btn {
+    margin-left: 8px;
+}
+
+/* Input focus mejorado */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.15);
+}
+
+/* Mensajes de error más sutiles */
+.invalid-feedback {
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* Cards de formularios */
+.form-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: none;
+}
+
+.form-card .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 600;
+}
+
+/* Responsive para botones en móviles */
+@media (max-width: 576px) {
+    .form-buttons .btn {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    .form-buttons .btn + .btn {
+        margin-left: 0;
+    }
+}

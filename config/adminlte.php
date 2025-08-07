@@ -330,7 +330,23 @@ return [
         'icon' => 'fas fa-fw fa-users',
         'active' => ['empleados*'],
     ],
-    // *** FIN DEL BLOQUE DE CLIENTES ***
+    // *** FIN DEL BLOQUE DE EMPLEADOS ***
+     // *** BLOQUE PARA RESPONSABLES ***
+    [
+        'text' => 'Responsables',
+        'route' => 'responsables.index',
+        'icon' => 'fas fa-fw fa-users',
+        'active' => ['responsables*'],
+    ],
+    // *** FIN DEL BLOQUE DE RESPONSABLES ***
+     // *** BLOQUE PARA EGRESOS ***
+    [
+        'text' => 'Egresos',
+        'route' => 'egresos.index',
+        'icon' => 'fas fa-fw fa-users',
+        'active' => ['egresos*'],
+    ],
+    // *** FIN DEL BLOQUE DE EGRESOS ***
         [
             'text' => 'blog',
             'url' => 'admin/blog',

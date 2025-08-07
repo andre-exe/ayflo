@@ -12,7 +12,8 @@ class EgresoController extends Controller
      */
     public function index()
     {
-        //
+        $egresos = Egreso::paginate(5);
+    return view('egresos.index', compact('egresos'));
     }
 
     /**
@@ -20,7 +21,7 @@ class EgresoController extends Controller
      */
     public function create()
     {
-        //
+         return view('egresos.create');
     }
 
     /**
@@ -28,7 +29,16 @@ class EgresoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $request->validate([
+            'montoegreso' => 'required|string|max:255',
+            'descripcionegreso' => 'required|string|max:255',
+            'fecha' => 'required|string|max:20',
+            
+        ]);
+
+        Egreso::create($request->all());
+
+         return redirect()->route('egresos.index');
     }
 
     /**
@@ -36,7 +46,7 @@ class EgresoController extends Controller
      */
     public function show(Egreso $egreso)
     {
-        //
+ //
     }
 
     /**

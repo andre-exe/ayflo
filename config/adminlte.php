@@ -335,7 +335,7 @@ return [
     [
         'text' => 'Responsables',
         'route' => 'responsables.index',
-        'icon' => 'fas fa-fw fa-users',
+        'icon' => 'fas fa-users-cog',
         'active' => ['responsables*'],
     ],
     // *** FIN DEL BLOQUE DE RESPONSABLES ***
@@ -343,10 +343,18 @@ return [
     [
         'text' => 'Egresos',
         'route' => 'egresos.index',
-        'icon' => 'fas fa-fw fa-users',
+        'icon' => 'fas fa-file-invoice-dollar',
         'active' => ['egresos*'],
     ],
     // *** FIN DEL BLOQUE DE EGRESOS ***
+     // *** BLOQUE PARA PAGOS ***
+    [
+        'text' => 'pagos',
+        'route' => 'pagos.index',
+        'icon' => 'fas fa-wallet',
+        'active' => ['pagos*'],
+    ],
+    // *** FIN DEL BLOQUE DE PAGOS ***
         [
             'text' => 'blog',
             'url' => 'admin/blog',

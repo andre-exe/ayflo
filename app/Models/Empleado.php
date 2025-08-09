@@ -31,15 +31,21 @@ class Empleado extends Model
 	public $timestamps = false;
 
 	protected $fillable = [
+		'dui',
 		'nombresemp',
 		'apellidosemp',
 		'telefonemp',
 		'direccionemp',
-		'cargo'
+		'cargo_id'
 	];
 
 	public function trabajos()
 	{
 		return $this->hasMany(Trabajo::class, 'empleado');
 	}
+
+	public function cargo()
+{
+    return $this->belongsTo(Cargo::class);
+}
 }

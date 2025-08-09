@@ -327,7 +327,7 @@ return [
     [
         'text' => 'Empleados',
         'route' => 'empleados.index',
-        'icon' => 'fas fa-fw fa-users',
+        'icon' => 'fas fa-id-badge',
         'active' => ['empleados*'],
     ],
     // *** FIN DEL BLOQUE DE EMPLEADOS ***
@@ -343,7 +343,7 @@ return [
     [
         'text' => 'Egresos',
         'route' => 'egresos.index',
-        'icon' => 'fas fa-fw fa-users',
+        'icon' => 'fas fa-money-bill-wave',
         'active' => ['egresos*'],
     ],
     // *** FIN DEL BLOQUE DE EGRESOS ***

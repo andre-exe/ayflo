@@ -81,8 +81,8 @@
             @endif
         </td>
         <td data-label="Cargo" class="record-name">
-            {{ $empleado->cargo }}
-        </td>
+    {{ $empleado->cargo ? $empleado->cargo->nombre : 'Sin cargo' }}
+</td>
         <td data-label="Acciones" class="action-buttons">
             <a href="{{ route('empleados.show', $empleado->dui) }}" 
                 class="btn btn-sm btn-view"

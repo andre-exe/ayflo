@@ -51,7 +51,7 @@ function mostrarAlertaError(mensaje) {
 function confirmarEliminacion(callback, texto = '¿Estás seguro de eliminar este elemento?') {
     Swal.fire({
         title: '¿Estás seguro?',
-        text: texto + ' Esta acción no se puede deshacer.',
+        text: texto ,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',

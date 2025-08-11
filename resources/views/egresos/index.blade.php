@@ -40,9 +40,11 @@
 
 @section('table-headers')
     <th width="8%">ID</th>
-    <th width="20%">Monto de egreso</th>
-    <th width="20%">descripcion de egreso</th>
-    <th width="18%">Fecha</th>
+    <th width="12%">Monto de egreso</th>
+    <th width="25%">descripcion de egreso</th>
+    <th width="12%">Fecha</th>
+    <th width="20%">Acciones</th>
+
 @endsection
 
 

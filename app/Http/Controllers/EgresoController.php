@@ -30,9 +30,9 @@ class EgresoController extends Controller
     public function store(Request $request)
     {
          $request->validate([
-            'montoegreso' => 'required|string|max:255',
+            'montoegreso' => 'required|numeric|min:0',
             'descripcionegreso' => 'required|string|max:255',
-            'fecha' => 'required|string|max:20',
+            'fecha' => 'required|date',
             
         ]);
 
@@ -46,7 +46,7 @@ class EgresoController extends Controller
      */
     public function show(Egreso $egreso)
     {
- //
+  //
     }
 
     /**
@@ -54,7 +54,7 @@ class EgresoController extends Controller
      */
     public function edit(Egreso $egreso)
     {
-        //
+        return view('egresos.edit', compact('egreso'));
     }
 
     /**
@@ -62,7 +62,16 @@ class EgresoController extends Controller
      */
     public function update(Request $request, Egreso $egreso)
     {
-        //
+         $request->validate([
+            'montoegreso' => 'required|numeric|min:0',
+            'descripcionegreso' => 'required|string|max:255',
+            'fecha' => 'required|date',
+            
+        ]);
+
+        $egreso->update($request->all());
+
+        return redirect()->route('egresos.index');
     }
 
     /**
@@ -70,6 +79,7 @@ class EgresoController extends Controller
      */
     public function destroy(Egreso $egreso)
     {
-        //
+        $egreso->delete();
+        return redirect()->route('egresos.index'); //
     }
 }

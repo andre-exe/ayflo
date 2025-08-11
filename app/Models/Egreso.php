@@ -26,7 +26,7 @@ class Egreso extends Model
 
 	protected $casts = [
 		'montoegreso' => 'float',
-		'fecha' => 'datetime'
+		'fecha' => 'date'
 	];
 
 	protected $fillable = [

@@ -25,7 +25,7 @@
             </div>
             @endif
 
-            <form action="{{ route('empleados.update', $empleado->dui) }}" method="POST" id="EmpleadoForm">
+            <form action="{{ route('empleados.update', $empleado->id) }}" method="POST" id="EmpleadoForm">
                 @csrf
                 @method('PUT')
 
@@ -92,22 +92,24 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="cargo_id" class="form-label">
-                        <i class="fas fa-briefcase text-primary"></i> Cargo del empleado:
-                    </label>
-                    <select name="cargo_id" id="cargo_id" class="form-control @error('cargo_id') is-invalid @enderror" required>
-                        <option value="">Seleccione el cargo</option>
-                        @foreach ($cargos as $cargo)
-                        <option value="{{ $cargo->id }}"
-                            {{ old('cargo_id', $empleado->cargo_id) == $cargo->id ? 'selected' : '' }}>
-                            {{ $cargo->nombre }}
-                        </option>
-                        @endforeach
-                    </select>
-                    @error('cargo_id')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+    <label for="cargo_id" class="form-label">
+        <i class="fas fa-briefcase text-primary"></i> Cargo del empleado:
+    </label>
+    <select name="cargo_id" id="cargo_id" 
+            class="form-control @error('cargo_id') is-invalid @enderror" 
+            required>
+        <option value="">Seleccione el cargo</option>
+        @foreach ($cargos as $cargoItem)
+        <option value="{{ $cargoItem->id }}" 
+                {{ old('cargo_id', $empleado->cargo_id) == $cargoItem->id ? 'selected' : '' }}>
+            {{ $cargoItem->nombre }}
+        </option>
+        @endforeach
+    </select>
+    @error('cargo_id')
+    <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
 
 
                 <div class="form-buttons">

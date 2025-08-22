@@ -70,6 +70,8 @@ return [
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
 
+    'logo_url' => '/login',
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Logo
@@ -343,16 +345,13 @@ return [
     [
         'text' => 'Egresos',
         'route' => 'egresos.index',
-<<<<<<< HEAD
         'icon' => 'fas fa-money-bill-wave',
-
->>>>>>> revisar-rama
         'active' => ['egresos*'],
     ],
     // *** FIN DEL BLOQUE DE EGRESOS ***
      // *** BLOQUE PARA PAGOS ***
     [
-        'text' => 'pagos',
+        'text' => 'Pagos',
         'route' => 'pagos.index',
         'icon' => 'fas fa-wallet',
         'active' => ['pagos*'],
@@ -363,14 +362,15 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
-        [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
+        // *** BLOQUE PARA TRABAJOS ***
+    [
+        'text' => 'Trabajo',
+        'route' => 'trabajos.index',
+        'icon' => 'fas fa-map',
+        'active' => ['trabajos*'],
+    ],
+    // *** FIN DEL BLOQUE DE TRABAJOS ***
+        ['header' => 'CONSULTAS DE DATOS'],
         [
             'text' => 'profile',
             'url' => 'admin/settings',
@@ -419,22 +419,7 @@ return [
                 ],
             ],
         ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
+       
     ],
 
     /*

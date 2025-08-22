@@ -1,51 +1,40 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Cargo;
 
-/**
- * Class Empleado
- * 
- * @property string $dui
- * @property string $nombresemp
- * @property string $apellidosemp
- * @property string|null $telefonemp
- * @property string|null $direccionemp
- * @property string|null $cargo
- * 
- * @property Collection|Trabajo[] $trabajos
- *
- * @package App\Models
- */
 class Empleado extends Model
 {
-	protected $table = 'empleados';
-	protected $primaryKey = 'dui';
-	public $incrementing = false;
-	public $timestamps = false;
+    protected $table = 'empleado';
 
-	protected $fillable = [
-		'dui',
-		'nombresemp',
-		'apellidosemp',
-		'telefonemp',
-		'direccionemp',
-		'cargo_id'
-	];
+    // Cambiamos la PK a 'id' auto-incremental
+    protected $primaryKey = 'id';
+    public $incrementing = true; // ahora es auto-increment
+    public $timestamps = false;
 
-	public function trabajos()
-	{
-		return $this->hasMany(Trabajo::class, 'empleado');
-	}
+    protected $fillable = [
+        'nombresemp',
+        'apellidosemp',
+        'telefonemp',
+        'direccionemp',
+        'cargo_id'
+    ];
 
-	public function cargo()
+    protected $with = ['cargoRelacion'];
+
+  
+    public function trabajos()
+    {
+        return $this->hasMany(Trabajo::class, 'empleado'); 
+    }
+
+   
+    public function cargoRelacion()
 {
-    return $this->belongsTo(Cargo::class);
+    return $this->belongsTo(Cargo::class, 'cargo_id', 'id');
 }
+
 }

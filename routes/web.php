@@ -28,12 +28,26 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    // Rutas para tus controladores
+    Route::get('/home', function () {
+    return redirect('/dashboard');
+})->name('home');
+
+
     Route::resource('clientes', App\Http\Controllers\ClienteController::class);
     Route::resource('responsables', ResponsableController::class);
     Route::resource('empleados', App\Http\Controllers\EmpleadoController::class);
     Route::resource('pagos', PagoController::class);
     Route::resource('bitacoras', BitacoraController::class);
+
+    // RUTAS ESPECÍFICAS DE TRABAJOS - ANTES DEL RESOURCE
+    Route::get('trabajos/{id}/archivo/{campo}', [TrabajoController::class, 'descargarArchivo'])
+         ->name('trabajos.descargar-archivo');
+    Route::delete('trabajos/{id}/archivo/{campo}', [TrabajoController::class, 'eliminarArchivo'])
+         ->name('trabajos.eliminar-archivo');
+    Route::get('/trabajos/test-descarga', [TrabajoController::class, 'testDescarga']);
+
+    // RESOURCE DE TRABAJOS - DESPUÉS DE LAS RUTAS ESPECÍFICAS
     Route::resource('trabajos', TrabajoController::class);
+
     Route::resource('egresos', EgresoController::class);
 });

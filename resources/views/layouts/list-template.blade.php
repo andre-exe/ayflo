@@ -52,15 +52,16 @@
                 <p class="mb-0">{{ $headerSubtitle ?? '' }}</p>
             </div>
             <div class="col-md-4 text-md-right mt-3 mt-md-0">
-                @if(isset($statsCards))
-                    @foreach($statsCards as $card)
-                        <div class="stats-card {{ $card['type'] ?? '' }} mr-2 mb-2">
-                            <i class="{{ $card['icon'] }} text-{{ $card['color'] ?? 'primary' }} mr-2"></i>
-                            <strong>{{ $card['value'] }}</strong> {{ $card['label'] }}
-                        </div>
-                    @endforeach
-                @endif
+    @if(isset($statsCards))
+        @foreach($statsCards as $card)
+            <div class="stats-card {{ $card['type'] ?? '' }} mr-2 mb-2 text-dark">
+                <i class="{{ $card['icon'] }} text-{{ $card['color'] ?? 'primary' }} mr-2"></i>
+                <strong>{{ $card['value'] }}</strong> {{ $card['label'] }}
             </div>
+        @endforeach
+    @endif
+</div>
+
         </div>
     </div>
 

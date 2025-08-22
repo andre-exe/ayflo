@@ -39,9 +39,10 @@
 @extends('layouts.list-template')
 
 @section('table-headers')
-    <th width="8%">ID</th>
+    
     <th width="20%">Nombres</th>
     <th width="20%">Apellidos</th>
+    <th width="15%">Cliente</th>
     <th width="18%">Teléfono</th>
     <th width="20%">Correo</th>
     <th width="14%">Acciones</th>
@@ -50,15 +51,37 @@
 @section('table-rows')
     @foreach($responsables as $responsable)
     <tr>
-        <td data-label="ID">
-            <span class="record-id">#{{ $responsable->id }}</span>
-        </td>
+        
         <td data-label="Nombres" class="record-name">
             {{ $responsable->nombresresp }}
         </td>
         <td data-label="Apellidos" class="record-name">
             {{ $responsable->apellidosresp }}
         </td>
+
+
+        <td data-label="Cliente" class="record-name">
+    @php
+        
+        $clienteObj = \App\Models\Cliente::find($responsable->cliente);
+    @endphp
+    
+    @if($clienteObj)
+        
+        @if($clienteObj->nombrescliente && $clienteObj->apellidoscliente)
+            {{ $clienteObj->nombrescliente }} {{ $clienteObj->apellidoscliente }}
+        @else
+            Cliente #{{ $clienteObj->id }}
+        @endif
+    @else
+        <span class="text-muted">
+            <i class="fas fa-minus"></i> Sin Cliente
+        </span>
+    @endif
+</td>
+
+
+
         <td data-label="Teléfono" class="record-info">
             @if($responsable->telefonoresp)
                 <i class="fas fa-phone text-success mr-1"></i>
@@ -83,11 +106,7 @@
 
 
         <td data-label="Acciones" class="action-buttons">
-            <a href="{{ route('responsables.show', $responsable->id) }}" 
-                class="btn btn-sm btn-view"
-                title="Ver detalles">
-                <i class="fas fa-eye"></i>
-            </a>
+            
             <a href="{{ route('responsables.edit', $responsable->id) }}" 
                 class="btn btn-sm btn-edit"
                 title="Editar">

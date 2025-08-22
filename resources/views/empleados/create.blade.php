@@ -3,7 +3,6 @@
 @section('title', 'Registrar Empleado')
 
 @section('css')
-{{-- CSS global para formularios --}}
 <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
 @endsection
 
@@ -27,22 +26,6 @@
 
             <form action="{{ route('empleados.store') }}" method="POST" id="empleadoForm">
                 @csrf
-
-                <div class="form-group">
-                    <label for="dui" class="form-label">
-                        <i class="fas fa-id-card text-primary"></i> DUI:
-                    </label>
-                    <input type="text"
-                        name="dui"
-                        id="dui"
-                        class="form-control @error('dui') is-invalid @enderror"
-                        placeholder="12345678-9"
-                        value="{{ old('dui') }}"
-                        required>
-                    @error('dui')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
 
                 <div class="form-group">
                     <label for="nombresemp" class="form-label">
@@ -77,8 +60,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="telefonoemp" class="form-label">
-                        <i class="fas fa-mobile-alt text-success"></i> Telefono:
+                    <label for="telefonemp" class="form-label">
+                        <i class="fas fa-mobile-alt text-success"></i> Teléfono:
                     </label>
                     <input type="tel"
                         name="telefonemp"
@@ -93,13 +76,13 @@
 
                 <div class="form-group">
                     <label for="direccionemp" class="form-label">
-                        <i class="fas fa-map-marker-alt text-success"></i> Direccion:
+                        <i class="fas fa-map-marker-alt text-success"></i> Dirección:
                     </label>
                     <input type="text"
                         name="direccionemp"
                         id="direccionemp"
                         class="form-control @error('direccionemp') is-invalid @enderror"
-                        placeholder="Ingrese la direccion"
+                        placeholder="Ingrese la dirección"
                         value="{{ old('direccionemp') }}"
                         required>
                     @error('direccionemp')
@@ -108,21 +91,21 @@
                 </div>
 
                 <div class="form-group">
-    <label for="cargo_id" class="form-label">
-        <i class="fas fa-briefcase text-primary"></i> Cargo del empleado:
-    </label>
-    <select name="cargo_id" id="cargo_id" class="form-control @error('cargo_id') is-invalid @enderror" required>
-        <option value="">Seleccione el cargo</option>
-        @foreach ($cargos as $cargo)
-        <option value="{{ $cargo->id }}" {{ old('cargo_id') == $cargo->id ? 'selected' : '' }}>
-            {{ $cargo->nombre }}
-        </option>
-        @endforeach
-    </select>
-    @error('cargo_id')
-    <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
+                    <label for="cargo" class="form-label">
+                        <i class="fas fa-briefcase text-primary"></i> Cargo del empleado:
+                    </label>
+                    <select name="cargo_id" id="cargo_id" class="form-control @error('cargo_id') is-invalid @enderror" required>
+    <option value="">Seleccione el cargo</option>
+    @foreach ($cargos as $cargoItem)
+    <option value="{{ $cargoItem->id }}" {{ old('cargo_id') == $cargoItem->id ? 'selected' : '' }}>
+        {{ $cargoItem->nombre }}  
+    </option>
+    @endforeach
+</select>
+@error('cargo_id')
+<div class="invalid-feedback">{{ $message }}</div>
+@enderror
+                </div>
 
                 <div class="form-buttons">
                     <button type="submit" class="btn btn-success form-btn">
@@ -141,9 +124,8 @@
 @section('js')
 <script>
     $(document).ready(function() {
-        // Configurar validación en tiempo real
         configurarValidacionTiempoReal({
-            nombresempleado: {
+            nombresemp: {
                 requerido: true,
                 minLength: 2,
                 nombre: 'Nombres'
@@ -153,10 +135,10 @@
                 minLength: 2,
                 nombre: 'Apellidos'
             },
-            telefonoemp: {
+            telefonemp: {
                 requerido: false,
-                tipo: 'email',
-                nombre: 'Correo'
+                tipo: 'tel',
+                nombre: 'Teléfono'
             }
         });
     });

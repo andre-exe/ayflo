@@ -10,6 +10,8 @@ class Cargo extends Model
 {
     use HasFactory;
 
+     protected $table = 'cargo';
+
     protected $fillable = [
         'nombre',
         'descripcion',
@@ -20,10 +22,10 @@ class Cargo extends Model
         'activo' => 'boolean'
     ];
 
-    // Relación con empleados
     public function empleados()
     {
-        return $this->hasMany(Empleado::class);
+        return $this->hasMany(Empleado::class, 'cargo', 'id');
+        // hasMany(Modelo relacionado, clave foránea remota, clave primaria local)
     }
 
     // Scope para cargos activos

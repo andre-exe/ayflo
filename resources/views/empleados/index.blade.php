@@ -28,7 +28,7 @@
         [
             'icon' => 'fas fa-chart-line',
             'color' => 'primary',
-            'value' => $empleados->total(), // ← Cambiar de count() a total()
+            'value' => $empleados->total(),
             'label' => $empleados->total() != 1 ? 'empleados' : 'empleado'
         ]
     ];
@@ -39,7 +39,7 @@
 @extends('layouts.list-template')
 
 @section('table-headers')
-    <th width="8%">DUI</th>
+    <th width="8%">ID</th>
     <th width="15%">Nombres</th>
     <th width="15%">Apellidos</th>
     <th width="15%">Teléfono</th>
@@ -51,8 +51,8 @@
 @section('table-rows')
     @foreach($empleados as $empleado)
     <tr>
-        <td data-label="DUI">
-            <span class="record-id">{{ $empleado->dui }}</span>
+        <td data-label="ID">
+            <span class="record-id">{{ $empleado->id }}</span> <!-- Ahora muestra ID -->
         </td>
         <td data-label="Nombres" class="record-name">
             {{ $empleado->nombresemp }}
@@ -80,24 +80,20 @@
                 </span>
             @endif
         </td>
-        <td data-label="Cargo" class="record-name">
-    {{ $empleado->cargo ? $empleado->cargo->nombre : 'Sin cargo' }}
+        <td data-label="Cargo">
+    {{ $empleado->cargoRelacion->nombre ?? 'Sin cargo' }}
 </td>
         <td data-label="Acciones" class="action-buttons">
-            <a href="{{ route('empleados.show', $empleado->dui) }}" 
-                class="btn btn-sm btn-view"
-                title="Ver detalles">
-                <i class="fas fa-eye"></i>
-            </a>
-            <a href="{{ route('empleados.edit', $empleado->dui) }}" 
+            
+            <a href="{{ route('empleados.edit', $empleado->id) }}" 
                 class="btn btn-sm btn-edit"
                 title="Editar">
                 <i class="fas fa-edit"></i>
             </a>
 
             {{-- Formulario oculto para eliminar --}}
-            <form id="delete-form-{{ $empleado->dui }}" 
-                    action="{{ route('empleados.destroy', $empleado) }}" 
+            <form id="delete-form-{{ $empleado->id }}" 
+                    action="{{ route('empleados.destroy', $empleado->id) }}" 
                     method="POST" style="display: none;">
                 @csrf
                 @method('DELETE')
@@ -105,7 +101,7 @@
 
             <button type="button" 
                     class="btn btn-sm btn-delete btn-delete-emp" 
-                    data-id="{{ $empleado->dui }}"
+                    data-id="{{ $empleado->id }}"
                     data-name="{{ $empleado->nombresemp }} {{ $empleado->apellidosemp }}"
                     title="Eliminar">
                 <i class="fas fa-trash"></i>
@@ -113,4 +109,10 @@
         </td>
     </tr>
     @endforeach
+@endsection
+
+@section('pagination')
+    @if($enablePagination)
+        {{ $empleados->links() }} <!-- Enlaces de paginación -->
+    @endif
 @endsection

@@ -343,10 +343,7 @@ return [
     [
         'text' => 'Egresos',
         'route' => 'egresos.index',
-<<<<<<< HEAD
         'icon' => 'fas fa-money-bill-wave',
-
->>>>>>> revisar-rama
         'active' => ['egresos*'],
     ],
     // *** FIN DEL BLOQUE DE EGRESOS ***

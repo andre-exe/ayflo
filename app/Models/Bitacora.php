@@ -9,6 +9,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+use function PHPUnit\Framework\identicalTo;
+
 /**
  * Class Bitacora
  * 
@@ -34,7 +36,7 @@ class Bitacora extends Model
 		'responsable' => 'int',
 		'monto' => 'float',
 		'idtrabajo' => 'int',
-		'fechatrabajobitacora' => 'datetime'
+		'fechatrabajobitacora' => 'date'
 	];
 
 	protected $fillable = [
@@ -48,16 +50,16 @@ class Bitacora extends Model
 
 	public function cliente()
 	{
-		return $this->belongsTo(Cliente::class, 'cliente');
+		return $this->belongsTo(Cliente::class, 'cliente','id');
 	}
 
 	public function responsable()
 	{
-		return $this->belongsTo(Responsable::class, 'responsable');
+		return $this->belongsTo(Responsable::class, 'responsable','id');
 	}
 
 	public function trabajo()
 	{
-		return $this->belongsTo(Trabajo::class, 'idtrabajo');
+		return $this->belongsTo(Trabajo::class, 'idtrabajo','id');
 	}
 }

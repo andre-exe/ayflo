@@ -355,6 +355,15 @@ return [
         'active' => ['pagos*'],
     ],
     // *** FIN DEL BLOQUE DE PAGOS ***
+ // *** BLOQUE PARA BITACORA ***
+    [
+        'text' => 'bitacoras',
+        'route' => 'bitacoras.index',
+        'icon' => 'fas fa-book',
+        'active' => ['bitacoras*'],
+    ],
+    // *** FIN DEL BLOQUE DE BITACORA ***
+
         [
             'text' => 'blog',
             'url' => 'admin/blog',

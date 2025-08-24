@@ -1,4 +1,4 @@
-{{-- resources/views/bitacora/index.blade.php --}}
+{{-- resources/views/bitacoras/index.blade.php --}}
 
 @php
     // Configuración de la vista
@@ -21,7 +21,7 @@
     $enableSearch = true;
     $enableAnimations = true;
     $enablePagination = true; // paginación activada
-    $deleteButtonClass = '.btn-delete-bitacor'; // no implementaremos borrar por ahora
+    $deleteButtonClass = '.btn-delete-bitacor'; 
 
     // Estadísticas
     $statsCards = [
@@ -93,11 +93,7 @@
          
          {{-- Botones de bitácora --}}
         <td data-label="Acciones" class="action-buttons">
-            <a href="{{ route('bitacoras.show', $bitacora->id) }}" 
-                class="btn btn-sm btn-view"
-                title="Ver detalles">
-                <i class="fas fa-eye"></i>
-            </a>
+            
             <a href="{{ route('bitacoras.edit', $bitacora->id) }}" 
                 class="btn btn-sm btn-edit"
                 title="Editar">

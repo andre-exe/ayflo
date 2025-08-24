@@ -34,7 +34,7 @@ class Pago extends Model
 		'id_responsable' => 'int',
 		'montototal' => 'float',
 		'abono' => 'float',
-		'fechaabono' => 'datetime'
+		'fechaabono' => 'date'
 	];
 
 	protected $fillable = [
@@ -44,6 +44,7 @@ class Pago extends Model
 		'abono',
 		'fechaabono'
 	];
+	
 
 	public function cliente()
 	{

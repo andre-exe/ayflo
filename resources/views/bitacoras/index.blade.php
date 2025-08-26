@@ -78,7 +78,7 @@
 
 {{-- Datos sacados de la relación trabajo --}}
         <td data-label="IdTrabajo" class="record-name">
-            {{ $bitacora->trabajo ? $bitacora->trabajo->id : 'N/A' }}
+            {{ $bitacora->trabajo ? $bitacora->trabajo->nombretrb : 'N/A' }}
         </td>
    
         {{-- Datos sacados de bitacora--}}
@@ -93,11 +93,7 @@
          
          {{-- Botones de bitácora --}}
         <td data-label="Acciones" class="action-buttons">
-            <a href="{{ route('bitacoras.show', $bitacora->id) }}" 
-                class="btn btn-sm btn-view"
-                title="Ver detalles">
-                <i class="fas fa-eye"></i>
-            </a>
+           
             <a href="{{ route('bitacoras.edit', $bitacora->id) }}" 
                 class="btn btn-sm btn-edit"
                 title="Editar">

@@ -32,6 +32,7 @@ Route::middleware([
     return redirect('/dashboard');
 })->name('home');
 
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('clientes', App\Http\Controllers\ClienteController::class);
     Route::resource('responsables', ResponsableController::class);

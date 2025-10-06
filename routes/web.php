@@ -5,6 +5,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ResponsableController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\AbonoController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\TrabajoController;
 use App\Http\Controllers\EgresoController;
@@ -33,7 +34,18 @@ Route::middleware([
     Route::resource('responsables', ResponsableController::class);
     Route::resource('empleados', App\Http\Controllers\EmpleadoController::class);
     Route::resource('pagos', PagoController::class);
+    Route::post('abonos', [AbonoController::class, 'store'])->name('abonos.store');
+    Route::delete('abonos/{abono}', [AbonoController::class, 'destroy'])->name('abonos.destroy');
     Route::resource('bitacoras', BitacoraController::class);
     Route::resource('trabajos', TrabajoController::class);
     Route::resource('egresos', EgresoController::class);
+
+    Route::middleware(['auth'])->group(function () {
+    // Rutas de pagos
+    Route::resource('pagos', PagoController::class);
+    
+    // Rutas de abonos
+    Route::post('abonos', [AbonoController::class, 'store'])->name('abonos.store');
+    Route::delete('abonos/{abono}', [AbonoController::class, 'destroy'])->name('abonos.destroy');
+});
 });

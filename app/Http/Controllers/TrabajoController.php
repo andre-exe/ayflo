@@ -12,12 +12,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TrabajoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $trabajos = Trabajo::with(['clienteRelacion', 'responsable', 'empleado'])->latest()->paginate(10);
-        
+        $query = Trabajo::with(['clienteRelacion', 'responsable', 'empleado'])->latest();
 
-return view('trabajos.index', compact('trabajos'));
+    // Filtrar por estado si se envía en la URL (excepto "todos")
+    if ($request->filled('estado') && $request->estado !== 'todos') {
+        $query->where('estado', $request->estado);
+    }
+
+    $trabajos = $query->paginate(10);
+
+    return view('trabajos.index', compact('trabajos'));
+
+
     }
 
     public function create()
@@ -41,13 +49,13 @@ return view('trabajos.index', compact('trabajos'));
             'montopagado' => 'nullable|numeric|min:0',
             'nombretrb' => 'required|string|max:100',
            
-            'archivoescritura.*' => 'nullable|file|max:2048',
-            'archivoesquema.*' => 'nullable|file|max:2048',
-            'puntosrecorrido.*' => 'nullable|file|max:2048',
-            'archivodwg.*' => 'nullable|file|max:2048',
-            'archivokml.*' => 'nullable|file|max:2048',
-            'notas.*' => 'nullable|file|max:2048',
-            'insumos.*' => 'nullable|file|max:2048',
+            'archivoescritura.*' => 'nullable|file|max:5120',
+            'archivoesquema.*' => 'nullable|file|max:5120',
+            'puntosrecorrido.*' => 'nullable|file|max:5120',
+            'archivodwg.*' => 'nullable|file|max:5120',
+            'archivokml.*' => 'nullable|file|max:5120',
+            'notas.*' => 'nullable|file|max:5120',
+            'insumos.*' => 'nullable|file|max:5120',
         ]);
 
         
@@ -117,13 +125,13 @@ return view('trabajos.index', compact('trabajos'));
         'montopagado' => 'nullable|numeric|min:0',
         'nombretrb' => 'required|string|max:100',
         
-        'archivoescritura.*' => 'nullable|file|max:2048',   // Corregido nombre
-        'archivoesquema.*' => 'nullable|file|max:2048',     
-        'puntosrecorrido.*' => 'nullable|file|max:2048',
-        'archivodwg.*' => 'nullable|file|max:2048',
-        'archivokml.*' => 'nullable|file|max:2048',
-        'notas.*' => 'nullable|file|max:2048',
-        'insumos.*' => 'nullable|file|max:2048',
+        'archivoescritura.*' => 'nullable|file|max:5120',   // Corregido nombre
+        'archivoesquema.*' => 'nullable|file|max:5120',     
+        'puntosrecorrido.*' => 'nullable|file|max:5120',
+        'archivodwg.*' => 'nullable|file|max:5120',
+        'archivokml.*' => 'nullable|file|max:5120',
+        'notas.*' => 'nullable|file|max:5120',
+        'insumos.*' => 'nullable|file|max:5120',
         ]);
 
         
@@ -228,4 +236,45 @@ public function testDescarga(Request $request)
         $trabajo->delete();
         return redirect()->route('trabajos.index');
     }
+
+    public function pendientes()
+{
+    $trabajos = Trabajo::with(['clienteRelacion', 'responsable', 'empleado'])
+        ->where('estado', 'pendiente')
+        ->latest()
+        ->paginate(10);
+
+    return view('trabajos.pendientes', compact('trabajos'));
+}
+
+public function completados()
+{
+    $trabajos = Trabajo::with(['clienteRelacion', 'responsable', 'empleado'])
+        ->where('estado', 'completado')
+        ->latest()
+        ->paginate(10);
+
+    return view('trabajos.completados', compact('trabajos'));
+}
+
+public function en_progreso()
+{
+    $trabajos = Trabajo::with(['clienteRelacion', 'responsable', 'empleado'])
+        ->where('estado', 'en_progreso')
+        ->latest()
+        ->paginate(10);
+
+    return view('trabajos.en_progreso', compact('trabajos'));
+}
+
+public function cancelados()
+{
+    $trabajos = Trabajo::with(['clienteRelacion', 'responsable', 'empleado'])
+        ->where('estado', 'cancelado')
+        ->latest()
+        ->paginate(10);
+
+    return view('trabajos.cancelados', compact('trabajos'));
+}
+
 }

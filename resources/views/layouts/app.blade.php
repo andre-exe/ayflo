@@ -22,7 +22,18 @@
         <x-banner />
 
         <div class="min-h-screen bg-gray-100">
-            @include('navigation-menu')
+        {{-- Menú de navegación --}}
+        <nav class="bg-white shadow mb-4">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <ul class="flex space-x-4 py-4">
+                    @role('admin')
+                        <li><a href="{{ route('admin.dashboard') }}" class="text-blue-600 hover:text-blue-800">Panel de Administración</a></li>
+                        <li><a href="{{ route('empleados.index') }}" class="text-blue-600 hover:text-blue-800">Gestionar Usuarios</a></li>
+                        <li><a href="{{ route('trabajos.index') }}" class="text-blue-600 hover:text-blue-800">Trabajos</a></li>
+                    @endrole
+                </ul>
+            </div>
+        </nav>
 
 
             <!-- Page Heading -->

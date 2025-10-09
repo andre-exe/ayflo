@@ -11,9 +11,20 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
+    ->withMiddleware(function (Middleware $middleware) {
+        // Agregar middleware de Spatie Permission
+        $middleware->alias([
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+        ]);
+        
+      
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    ->withProviders([
+        
+        \Spatie\Permission\PermissionServiceProvider::class,
+    ])
+    ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

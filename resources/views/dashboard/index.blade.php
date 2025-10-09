@@ -26,7 +26,7 @@
                                 </div>
                                 <h2 class="welcome-title">¡Bienvenido a AYFLO SYSTEM!</h2>
                                 <p class="welcome-description text-muted mb-4">
-                                    Tu centro de comando para gestionar y monitorear todas las tareas de manera eficiente.
+                                    Tu centro de comando para gestionar y monitorear todas las operaciones de manera eficiente.
                                 </p>
                             </div>
                             
@@ -178,16 +178,10 @@
     
     .welcome-logo {
         display: inline-block;
-        animation: float 3s ease-in-out infinite;
     }
     
     .welcome-logo svg {
         filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-        transition: transform 0.3s ease;
-    }
-    
-    .welcome-logo:hover svg {
-        transform: scale(1.1);
     }
     
     .welcome-title {

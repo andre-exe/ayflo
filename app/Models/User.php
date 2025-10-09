@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;  // <- esto es clave
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens; // si usas Sanctum
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User
@@ -36,6 +37,7 @@ class User extends Authenticatable
 {
 	use HasApiTokens, Notifiable;
 	protected $table = 'users';
+	use HasRoles;
 
 	protected $casts = [
 		'email_verified_at' => 'datetime',

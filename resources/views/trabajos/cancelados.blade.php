@@ -2,20 +2,16 @@
 
 @php
     // Configuración de la vista
-    $headerTitle = 'Gestión de Trabajos';
-    $headerSubtitle = 'Administra y visualiza la información de tus trabajos con archivos';
-    $headerIcon = 'fas fa-briefcase';
+    $headerTitle = 'Trabajos Pendientes';
+    $headerSubtitle = 'Listado de trabajos con estado cancelado';
+    $headerIcon = 'fas fa-clock'; 
     
-    $tableTitle = 'Lista de Trabajos';
+    $tableTitle = 'Lista de Trabajos Cancelados';
     $tableIcon = 'fas fa-list';
     
-    $createRoute = route('trabajos.create');
-    $createButtonText = 'Nuevo Trabajo';
-    $createIcon = 'fas fa-plus';
-    
-    $emptyTitle = 'No hay trabajos registrados';
-    $emptyMessage = 'Comienza agregando tu primer trabajo haciendo clic en el botón "Nuevo Trabajo".';
-    $emptyButtonText = 'Registrar Primer Trabajo';
+    $emptyTitle = 'No hay trabajos cancelados';
+    $emptyMessage = 'Actualmente no hay registros en estado cancelados.';
+    $emptyButtonText = 'Registrar Trabajo';
     $emptyIcon = 'fas fa-briefcase';
     
     $enableSearch = true;
@@ -23,41 +19,18 @@
     $enablePagination = true;
     $deleteButtonClass = '.btn-delete-trabajo';
     
-    // Estadísticas
     $statsCards = [
-        [
-            'icon' => 'fas fa-briefcase',
-            'color' => 'primary',
-            'value' => $trabajos->total(),
-            'label' => $trabajos->total() != 1 ? 'trabajos' : 'trabajo'
-        ],
         [
             'icon' => 'fas fa-clock',
             'color' => 'warning',
-            'value' => $trabajos->where('estado', 'pendiente')->count(),
-            'label' => 'pendientes'
-        ],
-        [
-            'icon' => 'fas fa-check-circle',
-            'color' => 'success',
-            'value' => $trabajos->where('estado', 'completado')->count(),
-            'label' => 'completados'
-        ],
-        [
-            'icon' => 'fas fa-file-alt',
-            'color' => 'info',
-            'value' => $trabajos->filter(function($trabajo) {
-                return collect(['archivoescritura', 'archivoesquema', 'puntosrecorrido', 'archivodwg', 'archivokml', 'notas', 'insumos'])
-                    ->some(function($campo) use ($trabajo) {
-                        return !empty($trabajo->$campo);
-                    });
-            })->count(),
-            'label' => 'con archivos'
+            'value' => $trabajos->total(),
+            'label' => $trabajos->total() != 1 ? 'cancelados' : 'cancelado'
         ]
     ];
     
     $records = $trabajos;
 @endphp
+
 
 @extends('layouts.list-template')
 
@@ -116,7 +89,6 @@
                 {{ ucfirst(str_replace('_', ' ', $trabajo->estado)) }}
             </span>
         </td>
-        @role('admin')
         <td data-label="Monto Total" class="record-info">
            
             <strong>${{ number_format($trabajo->montototal, 2) }}</strong>
@@ -124,7 +96,6 @@
                 <br><small class="text-muted">Pagado: ${{ number_format($trabajo->montopagado, 2) }}</small>
             @endif
         </td>
-        @endrole
         <td data-label="Archivos" class="record-info">
             @php
     $archivosCount = 0;
@@ -148,7 +119,7 @@
         </td>
         <td data-label="Acciones" class="action-buttons">
            
-            @role('admin|dibujante')
+            
             @if($archivosCount > 0)
                 <div class="btn-group" role="group">
                     <button type="button" 
@@ -159,7 +130,6 @@
                             title="Descargar archivos">
                         <i class="fas fa-download"></i>
                     </button>
-                    
                     <div class="dropdown-menu">
                         @foreach($camposArchivos as $campo)
                             @if(!empty($trabajo->$campo))
@@ -196,7 +166,6 @@
                     title="Eliminar">
                 <i class="fas fa-trash"></i>
             </button>
-            @endrole
         </td>
     </tr>
     @endforeach

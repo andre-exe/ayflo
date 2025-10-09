@@ -195,8 +195,8 @@
                                 id="archivoescritura"
                                 class="form-control-file @error('archivoescritura') is-invalid @enderror"
                                 multiple
-                                accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.rar">
-                            <small class="form-text text-muted">Formatos: PDF, DOC, DOCX, XLS, XLSX, ZIP, RAR</small>
+                                accept=".pdf">
+                            <small class="form-text text-muted">Formatos: PDF</small>
                             @error('archivosestructura')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -206,15 +206,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="puntosrecorrido" class="form-label">
-                                <i class="fas fa-route text-danger"></i> Puntos de Recorrido:
+                                <i class="fas fa-route text-danger"></i> Puntos de Levantamiento:
                             </label>
                             <input type="file"
                                 name="puntosrecorrido[]"
                                 id="puntosrecorrido"
                                 class="form-control-file @error('puntosrecorrido') is-invalid @enderror"
                                 multiple
-                                accept=".gpx,.kml,.csv,.txt,.pdf">
-                            <small class="form-text text-muted">Formatos: GPX, KML, CSV, TXT, PDF</small>
+                                accept=".gpx,.kml,.csv,.txt,.pdf, .dwg, .dxf">
+                            <small class="form-text text-muted">Formatos: GPX, KML, CSV, TXT, PDF, DWG, DXF</small>
                             @error('puntosrecorrido')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -244,7 +244,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="archivokml" class="form-label">
-                                <i class="fas fa-map-marked text-success"></i> Archivos KML:
+                                <i class="fas fa-map-marked text-success"></i> Recorrido y Coordenadas:
                             </label>
                             <input type="file"
                                 name="archivokml[]"
@@ -282,15 +282,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="insumos" class="form-label">
-                                <i class="fas fa-boxes text-info"></i> Insumos:
+                                <i class="fas fa-boxes text-info"></i> Fotografia:
                             </label>
                             <input type="file"
                                 name="insumos[]"
                                 id="insumos"
                                 class="form-control-file @error('insumos') is-invalid @enderror"
                                 multiple
-                                accept=".pdf,.xls,.xlsx,.csv,.txt">
-                            <small class="form-text text-muted">Formatos: PDF, XLS, XLSX, CSV, TXT</small>
+                                accept=".jpg, .jpeg, .png">
+                            <small class="form-text text-muted">Formatos: JPG, JPEG, PNG</small>
                             @error('insumos')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -308,8 +308,8 @@
                                 id="archivoesquema"
                                 class="form-control-file @error('archivoesquema') is-invalid @enderror"
                                 multiple
-                                accept=".pdf,.xls,.xlsx,.csv,.txt">
-                            <small class="form-text text-muted">Formatos: PDF, XLS, XLSX, CSV, TXT</small>
+                                accept=".pdf, .jpg">
+                            <small class="form-text text-muted">Formatos: PDF, JPG</small>
                             @error('archivoesquema')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

@@ -380,54 +380,34 @@ return [
     ],
     // *** FIN DEL BLOQUE DE TRABAJOS ***
         ['header' => 'CONSULTAS DE DATOS'],
+        // *** BLOQUE PARA CONSULTA TRABAJOS ***
+    [
+    'text' => 'Trabajos por estado',
+    'icon' => 'fas fa-folder-open',
+    'submenu' => [
         [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Trabajos Pendientes',
+            'route'  => 'trabajos.pendientes',
         ],
         [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Trabajos Completados',
+            'route'  => 'trabajos.completados',
         ],
         [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
+            'text' => 'Trabajos En Proceso',
+            'route'  => 'trabajos.en_progreso',
         ],
+        
+       [
+            'text' => 'Trabajos Cancelados',
+            'route'  => 'trabajos.cancelados',
+        ],
+    ],
+],
+    
+    // *** FIN DEL BLOQUE DE CONSULTA TRABAJOS ***
+        
+        
        
     ],
 

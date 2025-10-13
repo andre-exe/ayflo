@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Pago;
+use App\Models\Cliente;
+use App\Models\Responsable;
+use App\Models\Trabajo;
 use Illuminate\Http\Request;
 
 class PagoController extends Controller
@@ -12,7 +14,11 @@ class PagoController extends Controller
      */
     public function index()
     {
-        //
+        $pagos = Pago::with(['cliente', 'responsable', 'trabajo'])
+            ->orderBy('fecha_creacion', 'desc')
+            ->paginate(10);
+        
+        return view('pagos.index', compact('pagos'));
     }
 
     /**
@@ -20,7 +26,11 @@ class PagoController extends Controller
      */
     public function create()
     {
-        //
+        $clientes = Cliente::orderBy('nombrescliente')->get();
+        $responsables = Responsable::orderBy('nombresresp')->get();
+        $trabajos = Trabajo::orderBy('fechatrabajo', 'desc')->get();
+        
+        return view('pagos.create', compact('clientes', 'responsables', 'trabajos'));
     }
 
     /**
@@ -28,7 +38,26 @@ class PagoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+     $request->validate([
+            'id_cliente' => 'required|exists:cliente,id',
+            'id_responsable' => 'nullable|exists:responsable,id',
+            'id_trabajo' => 'required|exists:trabajos,id',
+            'monto_total' => 'required|numeric|min:0',
+            'fecha_creacion' => 'required|date',
+        ]);
+
+        $pago = new Pago();
+        $pago->id_cliente = $request->id_cliente;
+        $pago->id_responsable = $request->id_responsable;
+        $pago->id_trabajo = $request->id_trabajo;
+        $pago->monto_total = $request->monto_total;
+        $pago->monto_pendiente = $request->monto_total; // Inicia igual al total
+        $pago->estado = 'pendiente';
+        $pago->fecha_creacion = $request->fecha_creacion;
+        $pago->save();
+
+        return redirect()->route('pagos.index')
+            ->with('success', 'Pago creado exitosamente');
     }
 
     /**
@@ -36,7 +65,8 @@ class PagoController extends Controller
      */
     public function show(Pago $pago)
     {
-        //
+        $pago->load(['cliente', 'responsable', 'trabajo', 'abonos']);
+        return view('pagos.show', compact('pago'));
     }
 
     /**
@@ -44,7 +74,11 @@ class PagoController extends Controller
      */
     public function edit(Pago $pago)
     {
-        //
+        $clientes = Cliente::orderBy('nombrescliente')->get();
+        $responsables = Responsable::orderBy('nombresresp')->get();
+        $trabajos = Trabajo::orderBy('fechatrabajo', 'desc')->get();
+        
+        return view('pagos.edit', compact('pago', 'clientes', 'responsables', 'trabajos'));
     }
 
     /**
@@ -52,7 +86,17 @@ class PagoController extends Controller
      */
     public function update(Request $request, Pago $pago)
     {
-        //
+        $request->validate([
+            'id_cliente' => 'required|exists:cliente,id',
+            'id_responsable' => 'nullable|exists:responsable,id',
+            'id_trabajo' => 'required|exists:trabajos,id',
+            'monto_total' => 'required|numeric|min:0',
+            'fecha_creacion' => 'required|date',
+        ]);
+
+        $pago->update($request->all());
+
+        return redirect()->route('pagos.index');
     }
 
     /**
@@ -60,6 +104,7 @@ class PagoController extends Controller
      */
     public function destroy(Pago $pago)
     {
-        //
+        $pago->delete();
+        return redirect()->route('pagos.index');
     }
 }

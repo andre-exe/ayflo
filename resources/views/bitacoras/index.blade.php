@@ -1,4 +1,4 @@
-{{-- resources/views/bitacora/index.blade.php --}}
+{{-- resources/views/bitacoras/index.blade.php --}}
 
 @php
     // Configuración de la vista
@@ -21,7 +21,7 @@
     $enableSearch = true;
     $enableAnimations = true;
     $enablePagination = true; // paginación activada
-    $deleteButtonClass = '.btn-delete-bitacor'; // no implementaremos borrar por ahora
+    $deleteButtonClass = '.btn-delete-bitacor'; 
 
     // Estadísticas
     $statsCards = [
@@ -78,7 +78,7 @@
 
 {{-- Datos sacados de la relación trabajo --}}
         <td data-label="IdTrabajo" class="record-name">
-            {{ $bitacora->trabajo ? $bitacora->trabajo->nombretrb : 'N/A' }}
+            {{ $bitacora->trabajo ? $bitacora->trabajo->id : 'N/A' }}
         </td>
    
         {{-- Datos sacados de bitacora--}}
@@ -93,7 +93,7 @@
          
          {{-- Botones de bitácora --}}
         <td data-label="Acciones" class="action-buttons">
-           
+            
             <a href="{{ route('bitacoras.edit', $bitacora->id) }}" 
                 class="btn btn-sm btn-edit"
                 title="Editar">

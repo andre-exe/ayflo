@@ -276,5 +276,49 @@ public function cancelados()
 
     return view('trabajos.cancelados', compact('trabajos'));
 }
+// Agrega este método en tu TrabajoController.php
+
+public function porAnio(Request $request)
+{
+    $anoSeleccionado = $request->input('ano');
+    
+    // Obtener todos los trabajos para estadísticas generales
+    $trabajos = Trabajo::with(['clienteRelacion', 'responsable', 'empleado'])->get();
+    
+    // Obtener años disponibles para el filtro (PostgreSQL sintaxis)
+    $anosDisponibles = Trabajo::selectRaw('EXTRACT(YEAR FROM fechatrabajo) as ano')
+        ->distinct()
+        ->orderBy('ano', 'desc')
+        ->pluck('ano');
+    
+    if ($anoSeleccionado) {
+        // Vista de DETALLE: Mostrar todos los trabajos del año seleccionado
+        $trabajos = Trabajo::with(['clienteRelacion', 'responsable', 'empleado'])
+            ->whereRaw('EXTRACT(YEAR FROM fechatrabajo) = ?', [$anoSeleccionado])
+            ->orderBy('fechatrabajo', 'desc')
+            ->get();
+        
+        $trabajosPorAno = collect(); // Colección vacía para la vista
+        
+    } else {
+        // Vista de RESUMEN: Agrupar por año (PostgreSQL sintaxis)
+        $trabajosPorAno = Trabajo::selectRaw('
+                EXTRACT(YEAR FROM fechatrabajo) as ano,
+                COUNT(*) as cantidad,
+                SUM(montototal) as monto_total,
+                SUM(montopagado) as monto_pagado
+            ')
+            ->groupBy('ano')
+            ->orderBy('ano', 'desc')
+            ->get();
+    }
+    
+    return view('trabajos.por_anio', compact(
+        'trabajos',
+        'trabajosPorAno',
+        'anosDisponibles'
+    ));
+}
+
 
 }

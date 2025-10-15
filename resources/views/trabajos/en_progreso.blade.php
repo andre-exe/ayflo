@@ -40,9 +40,13 @@
     <th width="14%">Nombre de trabajo</th>
     <th width="12%">Fecha</th>
     <th width="10%">Estado</th>
+    @role('admin')
     <th width="12%">Monto Total</th>
+    @endrole
     <th width="10%">Archivos</th>
+    @role('admin')
     <th width="20%">Acciones</th>
+    @endrole
 @endsection
 
 @section('table-rows')
@@ -118,6 +122,7 @@
                 </span>
             @endif
         </td>
+        @role('admin')
         <td data-label="Acciones" class="action-buttons">
            
             
@@ -144,6 +149,7 @@
                         @endforeach
                     </div>
                 </div>
+                
             @endif
             
             <a href="{{ route('trabajos.edit', $trabajo->id) }}" 
@@ -159,6 +165,7 @@
                 @csrf
                 @method('DELETE')
             </form>
+            @endrole
 
             <button type="button" 
                     class="btn btn-sm btn-delete btn-delete-trabajo" 

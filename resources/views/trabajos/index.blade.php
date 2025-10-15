@@ -66,9 +66,13 @@
     <th width="14%">Nombre de trabajo</th>
     <th width="12%">Fecha</th>
     <th width="10%">Estado</th>
+    @role('admin')
     <th width="12%">Monto Total</th>
+    @endrole
     <th width="10%">Archivos</th>
+    @role('admin')
     <th width="20%">Acciones</th>
+    @endrole
 @endsection
 
 @section('table-rows')
@@ -146,9 +150,10 @@
                 </span>
             @endif
         </td>
+        @role('admin|dibujante')
         <td data-label="Acciones" class="action-buttons">
            
-            @role('admin|dibujante')
+            
             @if($archivosCount > 0)
                 <div class="btn-group" role="group">
                     <button type="button" 

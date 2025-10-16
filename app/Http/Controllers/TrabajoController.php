@@ -8,6 +8,7 @@ use App\Models\Empleado;
 use App\Models\Responsable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class TrabajoController extends Controller
@@ -320,5 +321,67 @@ public function porAnio(Request $request)
     ));
 }
 
+// inicio de consulta por empleado 
+public function porEmpleado(Request $request)
+{
+    $empleadoId = $request->input('empleado');
+    
+    // Obtener todos los empleados disponibles para el filtro
+    $empleadosDisponibles = Empleado::orderBy('nombresemp')->get();
+    
+    // Consulta base: solo trabajos completados
+    $trabajosQuery = Trabajo::where('estado', 'completado')
+        ->whereNotNull('empleado');
+    
+    if ($empleadoId) {
+        // Vista de detalle: trabajos de un empleado específico
+        $trabajos = $trabajosQuery
+            ->where('empleado', $empleadoId)
+            ->with(['clienteRelacion', 'responsable', 'empleado'])
+            ->orderBy('fechatrabajo', 'desc')
+            ->get();
+        
+        $empleadoSeleccionado = Empleado::find($empleadoId);
+        
+        return view('trabajos.por_empleado', compact(
+            'trabajos', 
+            'empleadosDisponibles', 
+            'empleadoSeleccionado'
+        ));
+    } else {
+        // Vista resumen: trabajos agrupados por empleado
+        $trabajosPorEmpleado = DB::table('trabajos')
+            ->join('empleado', 'trabajos.empleado', '=', 'empleado.id')
+            ->leftJoin('cargo', 'empleado.cargo_id', '=', 'cargo.id')
+            ->select(
+                'empleado.id',
+                'empleado.nombresemp',
+                'empleado.apellidosemp',
+                'cargo.nombre as cargo_nombre',
+                DB::raw('COUNT(trabajos.id) as cantidad'),
+                DB::raw('SUM(trabajos.montototal) as monto_total'),
+                DB::raw('SUM(trabajos.montopagado) as monto_pagado')
+            )
+            ->where('trabajos.estado', 'completado')
+            ->whereNotNull('trabajos.empleado')
+            ->groupBy(
+                'empleado.id', 
+                'empleado.nombresemp', 
+                'empleado.apellidosemp',
+                'cargo.nombre'
+            )
+            ->orderBy('cantidad', 'desc')
+            ->get();
+        
+        // Obtener todos los trabajos completados para estadísticas generales
+        $trabajos = $trabajosQuery->get();
+        
+        return view('trabajos.por_empleado', compact(
+            'trabajosPorEmpleado',
+            'trabajos',
+            'empleadosDisponibles'
+        ));
+    }
+}
 
 }

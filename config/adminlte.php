@@ -409,16 +409,16 @@ return [
         
        // *** BLOQUE PARA CONSULTA TRABAJOS ***
     [
-    'text' => 'Trabajos por año',
+    'text' => 'Consulta sobre Trabajos',
     'icon' => 'fas fa-folder-open',
     'submenu' => [
         [
-            'text' => 'Trabajos por año',
+            'text' => 'Trabajos por Año',
             'route'  => 'trabajos.por_anio',
         ],
         [
-            'text' => 'Trabajos por empleado',
-            'route'  => 'trabajos.completados',
+            'text' => 'Trabajos por Empleado',
+            'route'  => 'trabajos.por_empleado',
         ],
     ],
 ],

@@ -277,7 +277,7 @@ public function cancelados()
 
     return view('trabajos.cancelados', compact('trabajos'));
 }
-// Agrega este método en tu TrabajoController.php
+// Agrega este método es para filtrar por año
 
 public function porAnio(Request $request)
 {
@@ -306,8 +306,7 @@ public function porAnio(Request $request)
         $trabajosPorAno = Trabajo::selectRaw('
                 EXTRACT(YEAR FROM fechatrabajo) as ano,
                 COUNT(*) as cantidad,
-                SUM(montototal) as monto_total,
-                SUM(montopagado) as monto_pagado
+                SUM(montototal) as monto_total
             ')
             ->groupBy('ano')
             ->orderBy('ano', 'desc')
@@ -359,8 +358,8 @@ public function porEmpleado(Request $request)
                 'empleado.apellidosemp',
                 'cargo.nombre as cargo_nombre',
                 DB::raw('COUNT(trabajos.id) as cantidad'),
-                DB::raw('SUM(trabajos.montototal) as monto_total'),
-                DB::raw('SUM(trabajos.montopagado) as monto_pagado')
+                DB::raw('SUM(trabajos.montototal) as monto_total')
+              
             )
             ->where('trabajos.estado', 'completado')
             ->whereNotNull('trabajos.empleado')

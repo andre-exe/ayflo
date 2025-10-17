@@ -45,12 +45,6 @@
                 'color' => 'info',
                 'value' => '$' . number_format($trabajos->sum('montototal'), 2),
                 'label' => 'Ingresos del Año'
-            ],
-            [
-                'icon' => 'fas fa-hand-holding-usd',
-                'color' => 'warning',
-                'value' => '$' . number_format($trabajos->sum('montopagado'), 2),
-                'label' => 'Monto Pagado'
             ]
         ];
         $records = $trabajos;
@@ -121,19 +115,17 @@
     @if(request('ano'))
         {{-- Headers para vista de detalle (trabajos individuales) --}}
         <th width="10%">Código</th>
-        <th width="20%">Cliente</th>
-        <th width="25%">Descripción</th>
-        <th width="12%">Fecha</th>
-        <th width="12%">Monto Total</th>
-        <th width="12%">Monto Pagado</th>
-        <th width="9%">Acciones</th>
+        <th width="22%">Cliente</th>
+        <th width="32%">Descripción</th>
+        <th width="15%">Fecha</th>
+        <th width="13%">Monto Total</th>
+        <th width="8%">Acciones</th>
     @else
         {{-- Headers para vista resumen (agrupado por año) --}}
-        <th width="20%">Año</th>
-        <th width="20%">Cantidad de Trabajos</th>
-        <th width="25%">Ingresos Totales</th>
-        <th width="20%">Monto Pagado</th>
-        <th width="15%">Acciones</th>
+        <th width="25%">Año</th>
+        <th width="25%">Cantidad de Trabajos</th>
+        <th width="30%">Ingresos Totales</th>
+        <th width="20%">Acciones</th>
     @endif
 @endsection
 
@@ -168,17 +160,6 @@
                 <strong class="text-success">${{ number_format($trabajo->montototal, 2) }}</strong>
             </td>
             
-            <td data-label="Monto Pagado" class="record-info">
-                <strong class="text-info">${{ number_format($trabajo->montopagado, 2) }}</strong>
-                @php
-                    $porcentajePagado = $trabajo->montototal > 0 
-                        ? ($trabajo->montopagado / $trabajo->montototal) * 100 
-                        : 0;
-                @endphp
-                <br>
-                <small class="text-muted">({{ number_format($porcentajePagado, 1) }}%)</small>
-            </td>
-            
             <td data-label="Acciones" class="action-buttons">
                 <a href="{{ route('trabajos.show', $trabajo->id) }}" 
                     class="btn btn-sm btn-info"
@@ -208,24 +189,6 @@
                 <strong class="text-success" style="font-size: 1.1rem;">
                     ${{ number_format($grupo->monto_total, 2) }}
                 </strong>
-            </td>
-            
-            <td data-label="Monto Pagado" class="record-info">
-                <strong class="text-info">${{ number_format($grupo->monto_pagado, 2) }}</strong>
-                <br>
-                <small class="text-muted">
-                    ({{ $grupo->monto_total > 0 ? number_format(($grupo->monto_pagado / $grupo->monto_total) * 100, 1) : 0 }}%)
-                </small>
-                @php
-                    $saldo = $grupo->monto_total - $grupo->monto_pagado;
-                @endphp
-                @if($saldo > 0)
-                    <br>
-                    <small class="text-warning">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        Saldo: ${{ number_format($saldo, 2) }}
-                    </small>
-                @endif
             </td>
             
             <td data-label="Acciones" class="action-buttons">

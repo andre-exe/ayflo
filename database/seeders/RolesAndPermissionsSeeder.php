@@ -51,6 +51,8 @@ class RolesAndPermissionsSeeder extends Seeder
         $campo->givePermissionTo([
             'trabajos.index',
             'trabajos.create',
+            'clientes.index',
+            'clientes.create',
         ]);
     }
 }

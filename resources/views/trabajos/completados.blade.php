@@ -40,9 +40,13 @@
     <th width="14%">Nombre de trabajo</th>
     <th width="12%">Fecha</th>
     <th width="10%">Estado</th>
+    @role('admin')
     <th width="12%">Monto Total</th>
+    @endrole
     <th width="10%">Archivos</th>
+    @role('admin')
     <th width="20%">Acciones</th>
+    @endrole
 @endsection
 
 @section('table-rows')
@@ -90,6 +94,7 @@
                 {{ ucfirst(str_replace('_', ' ', $trabajo->estado)) }}
             </span>
         </td>
+        @role('admin')
         <td data-label="Monto Total" class="record-info">
            
             <strong>${{ number_format($trabajo->montototal, 2) }}</strong>
@@ -97,6 +102,7 @@
                 <br><small class="text-muted">Pagado: ${{ number_format($trabajo->montopagado, 2) }}</small>
             @endif
         </td>
+        @endrole
         <td data-label="Archivos" class="record-info">
             @php
     $archivosCount = 0;

@@ -123,7 +123,7 @@
                 </span>
             @endif
         </td>
-        @role('admin'|'dibujante')
+        @role('admin')
         <td data-label="Acciones" class="action-buttons">
            
             

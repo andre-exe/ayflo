@@ -25,7 +25,7 @@
             'icon' => 'fas fa-clock',
             'color' => 'warning',
             'value' => $trabajos->total(),
-            'label' => $trabajos->total() != 1 ? 'en_progreso' : 'en_progreso'
+            'label' => $trabajos->total() != 1 ? 'en_progreso' : 'En Proceso'
         ]
     ];
     
@@ -94,6 +94,7 @@
                 {{ ucfirst(str_replace('_', ' ', $trabajo->estado)) }}
             </span>
         </td>
+        @role('admin')
         <td data-label="Monto Total" class="record-info">
            
             <strong>${{ number_format($trabajo->montototal, 2) }}</strong>
@@ -101,6 +102,7 @@
                 <br><small class="text-muted">Pagado: ${{ number_format($trabajo->montopagado, 2) }}</small>
             @endif
         </td>
+        @endrole
         <td data-label="Archivos" class="record-info">
             @php
     $archivosCount = 0;
@@ -165,7 +167,7 @@
                 @csrf
                 @method('DELETE')
             </form>
-            @endrole
+            
 
             <button type="button" 
                     class="btn btn-sm btn-delete btn-delete-trabajo" 
@@ -175,6 +177,7 @@
                 <i class="fas fa-trash"></i>
             </button>
         </td>
+        @endrole
     </tr>
     @endforeach
 @endsection

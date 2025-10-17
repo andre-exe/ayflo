@@ -72,6 +72,9 @@
         ];
         $records = $trabajosPorAno;
     }
+    
+    // Campos de archivos para descargar
+    $camposArchivos = ['archivoescritura', 'archivoesquema', 'puntosrecorrido', 'archivodwg', 'archivokml', 'notas', 'insumos'];
 @endphp
 
 @extends('layouts.list-template')
@@ -161,11 +164,43 @@
             </td>
             
             <td data-label="Acciones" class="action-buttons">
-                <a href="{{ route('trabajos.show', $trabajo->id) }}" 
-                    class="btn btn-sm btn-info"
-                    title="Ver detalles">
-                    <i class="fas fa-eye"></i>
-                </a>
+                @php
+                    // Contar archivos del trabajo
+                    $archivosCount = 0;
+                    foreach($camposArchivos as $campo) {
+                        if(!empty($trabajo->$campo)) $archivosCount++;
+                    }
+                @endphp
+                
+                @if($archivosCount > 0)
+                    <div class="btn-group" role="group">
+                        <button type="button" 
+                                class="btn btn-sm btn-info dropdown-toggle" 
+                                data-toggle="dropdown" 
+                                aria-haspopup="true" 
+                                aria-expanded="false"
+                                title="Descargar archivos">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        
+                        <div class="dropdown-menu">
+                            @foreach($camposArchivos as $campo)
+                                @if(!empty($trabajo->$campo))
+                                    <a class="dropdown-item" 
+                                       href="{{ route('trabajos.descargar-archivo', [$trabajo->id, $campo]) }}"
+                                       target="_blank">
+                                        <i class="fas fa-file mr-2"></i>
+                                        {{ ucfirst(str_replace(['archivo', '_'], ['', ' '], $campo)) }}
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <button class="btn btn-sm btn-secondary" disabled title="Sin archivos">
+                        <i class="fas fa-download"></i>
+                    </button>
+                @endif
             </td>
         </tr>
         @endforeach
@@ -255,12 +290,24 @@
 .table td {
     vertical-align: middle;
 }
+
+.dropdown-menu {
+    min-width: 200px;
+}
+
+.dropdown-item {
+    font-size: 0.875rem;
+}
+
+.btn-group {
+    display: inline-block;
+}
 </style>
 @endpush
 
 @push('scripts')
 <script>
-$(document).ready(function() {
+ $(document).ready(function() {
     // Tooltips
     $('[title]').tooltip({
         placement: 'top',

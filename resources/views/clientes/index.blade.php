@@ -44,7 +44,9 @@
     <th width="20%">Apellidos</th>
     <th width="18%">Teléfono</th>
     <th width="20%">Correo</th>
+    @role('admin')
     <th width="14%">Acciones</th>
+    @endrole
 @endsection
 
 @section('table-rows')
@@ -79,6 +81,7 @@
                 </span>
             @endif
         </td>
+        @role('admin')
         <td data-label="Acciones" class="action-buttons">
             <a href="{{ route('clientes.show', $cliente->id) }}" 
                 class="btn btn-sm btn-view"
@@ -107,6 +110,7 @@
                 <i class="fas fa-trash"></i>
             </button>
         </td>
+        @endrole
     </tr>
     @endforeach
 @endsection

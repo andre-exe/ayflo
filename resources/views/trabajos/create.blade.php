@@ -183,7 +183,7 @@
                 <!-- Sección de Archivos -->
                 <hr>
                 <h5><i class="fas fa-folder text-info"></i> Archivos del Proyecto</h5>
-
+ 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">

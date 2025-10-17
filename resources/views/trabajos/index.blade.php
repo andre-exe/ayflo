@@ -8,10 +8,11 @@
     
     $tableTitle = 'Lista de Trabajos';
     $tableIcon = 'fas fa-list';
-    
+    if (auth()->user()->hasRole('admin|campo')) {
     $createRoute = route('trabajos.create');
     $createButtonText = 'Nuevo Trabajo';
     $createIcon = 'fas fa-plus';
+    }
     
     $emptyTitle = 'No hay trabajos registrados';
     $emptyMessage = 'Comienza agregando tu primer trabajo haciendo clic en el botón "Nuevo Trabajo".';
@@ -70,9 +71,9 @@
     <th width="12%">Monto Total</th>
     @endrole
     <th width="10%">Archivos</th>
-    @role('admin')
+    
     <th width="20%">Acciones</th>
-    @endrole
+    
 @endsection
 
 @section('table-rows')
@@ -150,7 +151,7 @@
                 </span>
             @endif
         </td>
-        @role('admin|dibujante')
+        
         <td data-label="Acciones" class="action-buttons">
            
             
@@ -185,6 +186,8 @@
                 title="Editar">
                 <i class="fas fa-edit"></i>
             </a>
+            
+            
 
             {{-- Formulario oculto para eliminar --}}
             <form id="delete-form-{{ $trabajo->id }}" 
@@ -193,7 +196,7 @@
                 @csrf
                 @method('DELETE')
             </form>
-
+@role('admin')
             <button type="button" 
                     class="btn btn-sm btn-delete btn-delete-trabajo" 
                     data-id="{{ $trabajo->id }}"
@@ -201,8 +204,9 @@
                     title="Eliminar">
                 <i class="fas fa-trash"></i>
             </button>
-            @endrole
+             @endrole
         </td>
+       
     </tr>
     @endforeach
 @endsection

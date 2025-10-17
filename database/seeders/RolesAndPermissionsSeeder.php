@@ -18,6 +18,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'clientes',
             'empleados',
             'egresos',
+            'pagos',
             'trabajos',
             'bitacoras',
             'responsables',
@@ -47,12 +48,14 @@ class RolesAndPermissionsSeeder extends Seeder
             'trabajos.edit',
         ]);
 
-        // Campo -> solo trabajos.index y trabajos.create
+        // Campo -> permisos para trabajos, responsables y clientes
         $campo->givePermissionTo([
             'trabajos.index',
             'trabajos.create',
             'clientes.index',
             'clientes.create',
+            'responsables.create',
+            'responsables.index',
         ]);
     }
 }

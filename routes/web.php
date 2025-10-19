@@ -21,9 +21,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/home', fn () => redirect('/dashboard'))->name('home');
-    Route::get('/trabajos/por-anio', [TrabajoController::class, 'porAnio'])->name('trabajos.por_anio');
-    Route::get('/trabajos/por-empleado', [TrabajoController::class, 'porEmpleado'])
-    ->name('trabajos.por_empleado');
+    Route::get('/trabajos/por-anio', [TrabajoController::class, 'porAnio'])->name('trabajos.por_anio')->middleware('role:admin');
+    Route::get('/trabajos/por-empleado', [TrabajoController::class, 'porEmpleado'])->name('trabajos.por_empleado')->middleware('role:admin');
 
     // ============================
     // Módulos solo admin (tiene todos los permisos)

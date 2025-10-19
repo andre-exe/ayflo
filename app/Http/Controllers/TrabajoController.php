@@ -57,13 +57,13 @@ class TrabajoController extends Controller
                 },
             ],
             'nombretrb' => 'required|string|max:100',
-            'archivoescritura.*' => 'nullable|file|max:5120',
-            'archivoesquema.*' => 'nullable|file|max:5120',
-            'puntosrecorrido.*' => 'nullable|file|max:5120',
-            'archivodwg.*' => 'nullable|file|max:5120',
-            'archivokml.*' => 'nullable|file|max:5120',
-            'notas.*' => 'nullable|file|max:5120',
-            'insumos.*' => 'nullable|file|max:5120',
+            'archivoescritura.*' => 'nullable|file|max:40960',
+            'archivoesquema.*' => 'nullable|file|max:40960',
+            'puntosrecorrido.*' => 'nullable|file|max:40960',
+            'archivodwg.*' => 'nullable|file|max:40960',
+            'archivokml.*' => 'nullable|file|max:40960',
+            'notas.*' => 'nullable|file|max:40960',
+            'insumos.*' => 'nullable|file|max:40960',
         ]);
 
         DB::beginTransaction();
@@ -180,13 +180,13 @@ class TrabajoController extends Controller
                 },
             ],
             'nombretrb' => 'required|string|max:100',
-            'archivoescritura.*' => 'nullable|file|max:5120',
-            'archivoesquema.*' => 'nullable|file|max:5120',
-            'puntosrecorrido.*' => 'nullable|file|max:5120',
-            'archivodwg.*' => 'nullable|file|max:5120',
-            'archivokml.*' => 'nullable|file|max:5120',
-            'notas.*' => 'nullable|file|max:5120',
-            'insumos.*' => 'nullable|file|max:5120',
+            'archivoescritura.*' => 'nullable|file|max:40960',
+            'archivoesquema.*' => 'nullable|file|max:40960',
+            'puntosrecorrido.*' => 'nullable|file|max:40960',
+            'archivodwg.*' => 'nullable|file|max:40960',
+            'archivokml.*' => 'nullable|file|max:40960',
+            'notas.*' => 'nullable|file|max:40960',
+            'insumos.*' => 'nullable|file|max:40960',
         ]);
 
         DB::beginTransaction();
